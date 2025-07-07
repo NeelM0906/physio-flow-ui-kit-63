@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { 
-  Calendar, 
+  Calendar as CalendarIcon, 
   Clock, 
   Plus, 
   ChevronLeft, 
@@ -10,6 +10,7 @@ import {
   User,
   MapPin
 } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
 
 interface Appointment {
   id: string;
@@ -194,7 +195,7 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
         <div className="space-y-3">
           {dayAppointments.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
-              <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
+              <CalendarIcon className="w-12 h-12 mx-auto mb-4 opacity-50" />
               <p className="text-lg">No appointments scheduled</p>
               <p className="text-sm">Click the + button to add a new appointment</p>
             </div>
@@ -238,6 +239,72 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
     );
   };
 
+  const renderMonthlyView = () => {
+    const monthAppointments = useMemo(() => {
+      const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+      const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+      
+      return filteredAppointments.filter(apt => {
+        const aptDate = new Date(apt.date);
+        return aptDate >= firstDayOfMonth && aptDate <= lastDayOfMonth;
+      });
+    }, [currentDate, filteredAppointments]);
+
+    return (
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold mb-4 text-center">
+          {currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+        </h3>
+        <div className="flex justify-between items-center mb-4">
+          <Calendar
+            mode="single"
+            selected={currentDate}
+            onSelect={(date) => {
+              if (date) {
+                setCurrentDate(date);
+                setViewMode('daily');
+              }
+            }}
+            month={currentDate}
+            onMonthChange={setCurrentDate}
+            className="rounded-md border"
+          />
+          <div className="ml-6 flex-1">
+            <h4 className="font-semibold mb-3">Appointments this month:</h4>
+            <div className="space-y-2 max-h-96 overflow-y-auto">
+              {monthAppointments.length === 0 ? (
+                <p className="text-muted-foreground">No appointments scheduled</p>
+              ) : (
+                monthAppointments.map(apt => (
+                  <div
+                    key={apt.id}
+                    className="p-3 bg-muted/30 rounded-lg cursor-pointer hover:bg-muted/50 transition-colors"
+                    onClick={() => onAppointmentClick(apt)}
+                  >
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <div className="font-medium">{apt.patientName}</div>
+                        <div className="text-sm text-muted-foreground">
+                          {new Date(apt.date).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            day: 'numeric' 
+                          })} at {formatTime(apt.time)}
+                        </div>
+                      </div>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(apt.type)}`}>
+                        {apt.type}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const renderWeeklyView = () => {
     const weekDays = getWeekDays(currentDate);
     
@@ -247,7 +314,7 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
           Week of {formatDate(weekDays[0])} - {formatDate(weekDays[6])}
         </h3>
         
-        <div className="grid grid-cols-7 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
           {weekDays.map((day, index) => {
             const dayAppointments = getDayAppointments(day);
             const isToday = day.toDateString() === new Date().toDateString();
@@ -277,6 +344,9 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
                       </div>
                     </div>
                   ))}
+                  {dayAppointments.length === 0 && (
+                     <p className="text-xs text-muted-foreground text-center pt-4">No appointments</p>
+                  )}
                 </div>
               </div>
             );
@@ -385,12 +455,7 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
       <div className="emr-card">
         {viewMode === 'daily' && renderDailyView()}
         {viewMode === 'weekly' && renderWeeklyView()}
-        {viewMode === 'monthly' && (
-          <div className="text-center py-12 text-muted-foreground">
-            <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <p>Monthly view coming soon!</p>
-          </div>
-        )}
+        {viewMode === 'monthly' && renderMonthlyView()}
       </div>
     </div>
   );
