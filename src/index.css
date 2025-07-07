@@ -151,87 +151,103 @@
 }
 
 @layer components {
-  /* Fun EMR specific component styles */
+  /* Base card style - removed hover:scale for less jarring effect, subtle shadow change */
   .emr-card {
-    @apply bg-card border-2 border-border rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02];
+    @apply bg-card border border-border rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300;
   }
   
+  /* Card with a colorful gradient accent, also with subtle hover */
   .emr-card-colorful {
-    @apply bg-gradient-to-br from-card to-accent/10 border-2 border-accent/30 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02];
+    @apply bg-gradient-to-br from-card to-accent/10 border border-accent/30 rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow duration-300;
   }
   
+  /* Primary button style - reduced scale effect, more consistent padding/font */
   .emr-button-primary {
     @apply bg-primary text-primary-foreground hover:bg-primary-hover 
-           px-6 py-3 rounded-2xl font-bold text-lg transition-all duration-300 
-           focus:outline-none focus:ring-4 focus:ring-primary/30 focus:ring-offset-2
-           hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+           px-5 py-2.5 rounded-lg font-semibold text-base transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-1
+           hover:scale-[1.03] active:scale-[0.98] shadow-sm hover:shadow-md;
   }
   
+  /* Secondary button style - similar adjustments */
   .emr-button-secondary {
     @apply bg-secondary text-secondary-foreground hover:bg-secondary-hover 
-           px-6 py-3 rounded-2xl font-bold text-lg transition-all duration-300 
-           focus:outline-none focus:ring-4 focus:ring-secondary/30 focus:ring-offset-2
-           hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+           px-5 py-2.5 rounded-lg font-semibold text-base transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:ring-offset-1
+           hover:scale-[1.03] active:scale-[0.98] shadow-sm hover:shadow-md;
   }
 
+  /* Fun button - kept more playful elements but toned down scale */
   .emr-button-fun {
     @apply bg-gradient-to-r from-tertiary to-sunny text-tertiary-foreground hover:from-tertiary-hover hover:to-sunny-hover 
-           px-6 py-3 rounded-2xl font-bold text-lg transition-all duration-300 
-           focus:outline-none focus:ring-4 focus:ring-tertiary/30 focus:ring-offset-2
-           hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+           px-5 py-2.5 rounded-lg font-semibold text-base transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-tertiary/50 focus:ring-offset-1
+           hover:scale-[1.03] active:scale-[0.98] shadow-sm hover:shadow-md;
   }
   
+  /* Input style - reduced border radius, consistent padding/font */
   .emr-input {
-    @apply w-full px-4 py-3 bg-input border-2 border-border rounded-2xl 
-           focus:outline-none focus:ring-4 focus:ring-ring/30 focus:border-ring 
-           placeholder:text-muted-foreground transition-all duration-300 text-lg;
+    @apply w-full px-4 py-2.5 bg-input border border-border rounded-lg
+           focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring
+           placeholder:text-muted-foreground transition-colors duration-200 text-base;
   }
   
+  /* Nav item - softer hover, consistent padding/font */
   .emr-nav-item {
-    @apply flex items-center px-6 py-4 text-muted-foreground hover:text-foreground 
-           hover:bg-gradient-to-r hover:from-accent/20 hover:to-secondary/20 rounded-2xl 
-           transition-all duration-300 cursor-pointer font-medium text-lg;
+    @apply flex items-center px-4 py-3 text-muted-foreground hover:text-foreground
+           hover:bg-accent/10 rounded-lg
+           transition-colors duration-200 cursor-pointer font-medium text-base;
   }
   
+  /* Active nav item - clearer distinction */
   .emr-nav-active {
-    @apply bg-gradient-to-r from-primary to-sky text-primary-foreground shadow-lg;
+    @apply bg-primary/10 text-primary font-semibold;
   }
   
+  /* Metric card - uses colorful card base */
   .emr-metric-card {
-    @apply emr-card-colorful text-center min-h-[140px] flex flex-col justify-center;
+    @apply emr-card-colorful text-center min-h-[120px] flex flex-col justify-center;
   }
   
+  /* Patient card - subtle hover border and background */
   .emr-patient-card {
-    @apply emr-card hover:border-primary/40 cursor-pointer hover:bg-gradient-to-br hover:from-card hover:to-primary/5;
+    @apply emr-card hover:border-primary/30 cursor-pointer hover:bg-primary/5;
   }
   
+  /* Status badges - more consistent padding and font */
   .emr-status-active {
-    @apply inline-flex items-center px-3 py-2 rounded-full text-sm font-bold 
-           bg-gradient-to-r from-success to-secondary text-success-foreground shadow-md;
+    @apply inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium
+           bg-success text-success-foreground;
   }
   
   .emr-status-inactive {
-    @apply inline-flex items-center px-3 py-2 rounded-full text-sm font-bold 
-           bg-muted text-muted-foreground shadow-md;
+    @apply inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium
+           bg-muted text-muted-foreground;
   }
   
+  /* Tab style - cleaner look, consistent font */
   .emr-tab {
-    @apply px-6 py-3 font-bold text-muted-foreground hover:text-foreground 
-           border-b-4 border-transparent hover:border-primary/50 transition-all duration-300
-           rounded-t-xl hover:bg-gradient-to-t hover:from-accent/20 hover:to-transparent text-lg;
+    @apply px-4 py-2.5 font-medium text-muted-foreground hover:text-primary
+           border-b-2 border-transparent hover:border-primary/70 transition-all duration-200
+           rounded-t-md text-base; /* Adjusted to text-base for consistency */
   }
   
+  /* Active tab - clearer active state */
   .emr-tab-active {
-    @apply text-primary border-primary bg-gradient-to-t from-primary/10 to-transparent;
+    @apply text-primary border-primary font-semibold;
   }
 
+  /* Exercise card - subtle gradient and hover */
   .emr-exercise-card {
-    @apply bg-gradient-to-br from-sky/20 to-secondary/20 border-2 border-sky/30 
-           rounded-2xl p-4 hover:scale-[1.02] transition-all duration-300 shadow-md hover:shadow-lg;
+    @apply bg-card border border-border
+           rounded-xl p-4 transition-all duration-300 shadow-sm hover:shadow-md;
+           /* Removed hover:scale, relies on emr-card base hover if needed */
   }
 
+  /* Template card - similar to exercise card */
   .emr-template-card {
-    @apply bg-gradient-to-br from-tertiary/20 to-sunny/20 border-2 border-tertiary/30 
-           rounded-2xl p-4 hover:scale-[1.02] transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer;
+    @apply bg-card border border-border
+           rounded-xl p-4 transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer;
+           /* Removed hover:scale */
   }
 }

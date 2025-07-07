@@ -238,6 +238,78 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
     );
   };
 
+  const renderMonthlyView = () => {
+    const monthAppointments = useMemo(() => {
+      const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+      const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+
+      return filteredAppointments.filter(apt => {
+        const aptDate = new Date(apt.date);
+        return aptDate >= firstDayOfMonth && aptDate <= lastDayOfMonth;
+      });
+    }, [currentDate, filteredAppointments]);
+
+    const getDaySummary = (date: Date) => {
+      const dayAppointments = getDayAppointments(date);
+      if (dayAppointments.length === 0) return null;
+
+      return (
+        <div className="mt-1 space-y-1">
+          {dayAppointments.slice(0, 2).map(apt => (
+            <div key={apt.id} className={`px-1 py-0.5 rounded text-xs ${getTypeColor(apt.type)}`}>
+              {apt.patientName.split(' ')[0]} {/* Show first name */}
+            </div>
+          ))}
+          {dayAppointments.length > 2 && (
+            <div className="text-xs text-muted-foreground">
+              + {dayAppointments.length - 2} more
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    return (
+      <div>
+        <h3 className="text-lg font-semibold mb-4 text-center">
+          {formatDate(currentDate).replace(/\d{1,2},/, '')} {/* Month Year */}
+        </h3>
+        <Calendar
+          mode="single"
+          selected={currentDate}
+          onSelect={(date) => {
+            if (date) {
+              setCurrentDate(date);
+              setViewMode('daily'); // Optionally switch to daily view on date click
+            }
+          }}
+          month={currentDate}
+          onMonthChange={setCurrentDate}
+          className="rounded-md border"
+          classNames={{
+            day_today: "bg-accent text-accent-foreground font-bold",
+          }}
+          renderDay={(day, _selectedDate, _activeModifiers, dayProps) => {
+            const date = dayProps.date;
+            const summary = getDaySummary(date);
+            return (
+              <div
+                className={`h-24 w-full p-1 border-t border-r text-sm relative flex flex-col items-start ${
+                  date.getMonth() !== currentDate.getMonth() ? 'text-muted-foreground opacity-50' : ''
+                } ${date.toDateString() === new Date().toDateString() ? 'bg-accent/50' : ''}`}
+              >
+                <span className={`font-medium ${date.toDateString() === new Date().toDateString() ? 'text-primary' : ''}`}>
+                  {date.getDate()}
+                </span>
+                {summary}
+              </div>
+            );
+          }}
+        />
+      </div>
+    );
+  };
+
   const renderWeeklyView = () => {
     const weekDays = getWeekDays(currentDate);
     
@@ -247,7 +319,7 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
           Week of {formatDate(weekDays[0])} - {formatDate(weekDays[6])}
         </h3>
         
-        <div className="grid grid-cols-7 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
           {weekDays.map((day, index) => {
             const dayAppointments = getDayAppointments(day);
             const isToday = day.toDateString() === new Date().toDateString();
@@ -277,6 +349,9 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
                       </div>
                     </div>
                   ))}
+                  {dayAppointments.length === 0 && (
+                     <p className="text-xs text-muted-foreground text-center pt-4">No appointments</p>
+                  )}
                 </div>
               </div>
             );
@@ -385,12 +460,7 @@ const AdvancedScheduling: React.FC<AdvancedSchedulingProps> = ({
       <div className="emr-card">
         {viewMode === 'daily' && renderDailyView()}
         {viewMode === 'weekly' && renderWeeklyView()}
-        {viewMode === 'monthly' && (
-          <div className="text-center py-12 text-muted-foreground">
-            <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <p>Monthly view coming soon!</p>
-          </div>
-        )}
+        {viewMode === 'monthly' && renderMonthlyView()}
       </div>
     </div>
   );
