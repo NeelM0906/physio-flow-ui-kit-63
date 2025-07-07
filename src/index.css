@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Physical Therapist EMR Design System - Vibrant Fun Palette */
+
+@layer base {
+  :root {
+    /* Base colors - bright and cheerful */
+    --background: 48 100% 97%;
+    --foreground: 210 11% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 11% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 210 11% 15%;
+
+    /* Primary - Rich Sapphire for important actions */
+    --primary: 220 91% 50%;
+    --primary-foreground: 220 91% 98%;
+    --primary-hover: 220 91% 45%;
+    --primary-light: 220 91% 95%;
+
+    /* Secondary - Mint Green for wellness and success */
+    --secondary: 152 68% 75%;
+    --secondary-foreground: 152 68% 20%;
+    --secondary-hover: 152 68% 70%;
+
+    /* Tertiary - Soft Peach for warmth */
+    --tertiary: 15 80% 80%;
+    --tertiary-foreground: 15 80% 25%;
+    --tertiary-hover: 15 80% 75%;
+
+    /* Sky Blue - Calming and trustworthy */
+    --sky: 195 100% 85%;
+    --sky-foreground: 195 100% 25%;
+    --sky-hover: 195 100% 80%;
+
+    /* Sunny Yellow - Energetic and optimistic */
+    --sunny: 48 100% 75%;
+    --sunny-foreground: 48 100% 25%;
+    --sunny-hover: 48 100% 70%;
+
+    /* Forest Green - Deep calming accent */
+    --forest: 140 40% 35%;
+    --forest-foreground: 140 40% 95%;
+    --forest-hover: 140 40% 30%;
+
+    /* Muted - Warm neutral grays */
+    --muted: 210 15% 94%;
+    --muted-foreground: 210 10% 45%;
+
+    /* Accent - Playful purple */
+    --accent: 260 65% 85%;
+    --accent-foreground: 260 65% 25%;
+    --accent-hover: 260 65% 80%;
+
+    /* Success - Vibrant mint green */
+    --success: 152 68% 60%;
+    --success-foreground: 152 68% 98%;
+    --success-light: 152 68% 95%;
+
+    /* Warning - Bright sunny yellow */
+    --warning: 48 100% 65%;
+    --warning-foreground: 48 100% 15%;
+    --warning-light: 48 100% 95%;
+
+    /* Error - Soft coral red */
+    --destructive: 0 65% 70%;
+    --destructive-foreground: 0 65% 98%;
+    --destructive-light: 0 65% 95%;
+
+    /* Borders and inputs */
+    --border: 210 20% 88%;
+    --input: 210 20% 96%;
+    --ring: 220 91% 50%;
+
+    /* Spacing and radius - more rounded for fun feel */
+    --radius: 1rem;
+
+    --sidebar-background: 48 100% 97%;
+    --sidebar-foreground: 210 11% 15%;
+    --sidebar-primary: 220 91% 50%;
+    --sidebar-primary-foreground: 220 91% 98%;
+    --sidebar-accent: 152 68% 95%;
+    --sidebar-accent-foreground: 152 68% 20%;
+    --sidebar-border: 210 20% 88%;
+    --sidebar-ring: 220 91% 50%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 220 91% 60%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 152 50% 50%;
+    --secondary-foreground: 210 40% 98%;
+
+    --tertiary: 15 60% 60%;
+    --tertiary-foreground: 210 40% 98%;
+
+    --sky: 195 80% 60%;
+    --sky-foreground: 210 40% 98%;
+
+    --sunny: 48 80% 60%;
+    --sunny-foreground: 222.2 47.4% 11.2%;
+
+    --forest: 140 40% 40%;
+    --forest-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 260 50% 60%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 220 91% 60%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 220 91% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 220 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Fun EMR specific component styles */
+  .emr-card {
+    @apply bg-card border-2 border-border rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02];
+  }
+  
+  .emr-card-colorful {
+    @apply bg-gradient-to-br from-card to-accent/10 border-2 border-accent/30 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02];
+  }
+  
+  .emr-button-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary-hover 
+           px-6 py-3 rounded-2xl font-bold text-lg transition-all duration-300 
+           focus:outline-none focus:ring-4 focus:ring-primary/30 focus:ring-offset-2
+           hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+  }
+  
+  .emr-button-secondary {
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary-hover 
+           px-6 py-3 rounded-2xl font-bold text-lg transition-all duration-300 
+           focus:outline-none focus:ring-4 focus:ring-secondary/30 focus:ring-offset-2
+           hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+  }
+
+  .emr-button-fun {
+    @apply bg-gradient-to-r from-tertiary to-sunny text-tertiary-foreground hover:from-tertiary-hover hover:to-sunny-hover 
+           px-6 py-3 rounded-2xl font-bold text-lg transition-all duration-300 
+           focus:outline-none focus:ring-4 focus:ring-tertiary/30 focus:ring-offset-2
+           hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl;
+  }
+  
+  .emr-input {
+    @apply w-full px-4 py-3 bg-input border-2 border-border rounded-2xl 
+           focus:outline-none focus:ring-4 focus:ring-ring/30 focus:border-ring 
+           placeholder:text-muted-foreground transition-all duration-300 text-lg;
+  }
+  
+  .emr-nav-item {
+    @apply flex items-center px-6 py-4 text-muted-foreground hover:text-foreground 
+           hover:bg-gradient-to-r hover:from-accent/20 hover:to-secondary/20 rounded-2xl 
+           transition-all duration-300 cursor-pointer font-medium text-lg;
+  }
+  
+  .emr-nav-active {
+    @apply bg-gradient-to-r from-primary to-sky text-primary-foreground shadow-lg;
+  }
+  
+  .emr-metric-card {
+    @apply emr-card-colorful text-center min-h-[140px] flex flex-col justify-center;
+  }
+  
+  .emr-patient-card {
+    @apply emr-card hover:border-primary/40 cursor-pointer hover:bg-gradient-to-br hover:from-card hover:to-primary/5;
+  }
+  
+  .emr-status-active {
+    @apply inline-flex items-center px-3 py-2 rounded-full text-sm font-bold 
+           bg-gradient-to-r from-success to-secondary text-success-foreground shadow-md;
+  }
+  
+  .emr-status-inactive {
+    @apply inline-flex items-center px-3 py-2 rounded-full text-sm font-bold 
+           bg-muted text-muted-foreground shadow-md;
+  }
+  
+  .emr-tab {
+    @apply px-6 py-3 font-bold text-muted-foreground hover:text-foreground 
+           border-b-4 border-transparent hover:border-primary/50 transition-all duration-300
+           rounded-t-xl hover:bg-gradient-to-t hover:from-accent/20 hover:to-transparent text-lg;
+  }
+  
+  .emr-tab-active {
+    @apply text-primary border-primary bg-gradient-to-t from-primary/10 to-transparent;
+  }
+
+  .emr-exercise-card {
+    @apply bg-gradient-to-br from-sky/20 to-secondary/20 border-2 border-sky/30 
+           rounded-2xl p-4 hover:scale-[1.02] transition-all duration-300 shadow-md hover:shadow-lg;
+  }
+
+  .emr-template-card {
+    @apply bg-gradient-to-br from-tertiary/20 to-sunny/20 border-2 border-tertiary/30 
+           rounded-2xl p-4 hover:scale-[1.02] transition-all duration-300 shadow-md hover:shadow-lg cursor-pointer;
+  }
+}
